@@ -67,12 +67,12 @@ public class GraphExample {
         q.add(0);
         visited[0] = true;
 
-        System.out.print("BFS Traversal: ");
+        System.out.print("BFS зам: ");
         while (!q.isEmpty()) {
-            int current = q.poll();
-            System.out.print(current + " ");
+            int q1 = q.poll();
+            System.out.print(q1 + " ");
             for (int i = 0; i < numVertices; i++) {
-                if (graph.adjacencyMatrix[current][i] == 1 && !visited[i]) {
+                if (graph.adjacencyMatrix[q1][i] == 1 && !visited[i]) {
                     q.add(i);
                     visited[i] = true;
                 }
@@ -83,5 +83,28 @@ public class GraphExample {
         double elapsedTimeInSeconds = (endTime - startTime) / 1000.0;
         System.out.println("\nБүх оройг амжилттай шалгасан. Зарцуулсан хугацаа: " + elapsedTimeInSeconds + " секунд");
 
+        long startTimedfs = System.currentTimeMillis();
+        // DFS хэрэгжүүлэлт
+        boolean[] visiteddfs = new boolean[numVertices];
+        visiteddfs[0] = true;
+        Stack<Integer> s= new Stack<>();
+        s.push(0);
+
+        System.out.print("DFS зам: ");
+        while(!s.isEmpty()){
+            int s1= s.pop();
+            System.out.print(s1+ " ");
+            for (int i=0; i<numVertices; i++){
+                if (graph.adjacencyMatrix[s1][i] == 1 && !visiteddfs[i]) {
+                    s.push(i);
+                    visiteddfs[i] = true;
+                }
+            }
+        }
+        
+        long endTimedfs = System.currentTimeMillis();
+        // Миллисекундээс секундэд хөрвүүлэх
+        double elapsedTimeInSecondsdfs = (endTimedfs - startTimedfs) / 1000.0;
+        System.out.println("\nБүх оройг амжилттай шалгасан. Зарцуулсан хугацаа: " + elapsedTimeInSecondsdfs + " секунд");
     }
 }
