@@ -3,7 +3,7 @@ import java.util.*;
 
 public class GraphExample {
     private int vertices; // Оройн тоо
-    private int[] degrees ; // Ирмэгийн тоо 
+    private int[] degrees; // Ирмэгийн тоо
     private int[][] adjacencyMatrix; // Хадгалах матриц
 
     // Графын конструктор
@@ -15,13 +15,11 @@ public class GraphExample {
 
     // Хоёр оройн хооронд ирмэг нэмэх
     public void addEdge(int src, int dest) {
-        if (src >= 0 && src < vertices && dest >= 0 && dest < vertices && degrees[src]<=10 && degrees[dest]<=10) {
+        if (src >= 0 && src < vertices && dest >= 0 && dest < vertices && degrees[src] < 10 && degrees[dest] < 10) {
             degrees[src]++;
             degrees[dest]++;
             adjacencyMatrix[src][dest] = 1;
             adjacencyMatrix[dest][src] = 1; // Чиглэлгүй граф
-        } else {
-            System.out.println("Оройн дугаар буруу байна!");
         }
     }
 
@@ -37,21 +35,22 @@ public class GraphExample {
     }
 
     public static void main(String[] args) {
-        int numVertices = 500; 
+        int numVertices = 500;
         GraphExample graph = new GraphExample(numVertices);
 
         // Ирмэгүүдийг нэмэх
         Random random = new Random();
-        int numEdges = 1000; 
+        int numEdges = 1000;
         for (int i = 0; i < numEdges; i++) {
-            int src = random.nextInt(numVertices); 
+            int src = random.nextInt(numVertices);
             int dest = random.nextInt(numVertices);
-            if (src != dest) { 
+            if (src != dest) {
                 graph.addEdge(src, dest);
             }
         }
 
-        for (int i = 0; i < 500; i++) {
+        // Орой бүрийн хөршүүдийг хэвлэх
+        for (int i = 0; i < numVertices; i++) {
             System.out.print("Орой " + i + ": ");
             for (int j = 0; j < numVertices; j++) {
                 if (graph.adjacencyMatrix[i][j] == 1) {
@@ -60,5 +59,29 @@ public class GraphExample {
             }
             System.out.println();
         }
+
+        long startTime = System.currentTimeMillis();
+        // BFS хэрэгжүүлэлт
+        boolean[] visited = new boolean[numVertices];
+        Queue<Integer> q = new LinkedList<>();
+        q.add(0);
+        visited[0] = true;
+
+        System.out.print("BFS Traversal: ");
+        while (!q.isEmpty()) {
+            int current = q.poll();
+            System.out.print(current + " ");
+            for (int i = 0; i < numVertices; i++) {
+                if (graph.adjacencyMatrix[current][i] == 1 && !visited[i]) {
+                    q.add(i);
+                    visited[i] = true;
+                }
+            }
+        }
+        long endTime = System.currentTimeMillis();
+        // Миллисекундээс секундэд хөрвүүлэх
+        double elapsedTimeInSeconds = (endTime - startTime) / 1000.0;
+        System.out.println("\nБүх оройг амжилттай шалгасан. Зарцуулсан хугацаа: " + elapsedTimeInSeconds + " секунд");
+
     }
 }
