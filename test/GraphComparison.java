@@ -125,7 +125,7 @@ class GraphAdjList {
 
     private void dfsHelper(int node, boolean[] visited) {
         visited[node] = true;
-        System.out.print(node + " "); // Print node
+        System.out.print(node + " "); 
         for (int neighbor : adjList.get(node)) {
             if (!visited[neighbor]) {
                 dfsHelper(neighbor, visited);
