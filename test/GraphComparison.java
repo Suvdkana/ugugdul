@@ -18,7 +18,9 @@ public class GraphComparison {
                 }
             }
         }
-
+        
+        graphMatrix.printMatrix();
+        
         measureTime(() -> graphMatrix.bfs(1), "BFS with Adjacency Matrix");
         measureTime(() -> graphAdjList.bfs(1), "BFS with Adjacency List");
         measureTime(() -> graphArrayList.bfs(1), "BFS with Array List");
@@ -46,6 +48,14 @@ class GraphMatrix {
     public void addEdge(int u, int v) {
         matrix[u][v] = 1;
         matrix[v][u] = 1;
+    }
+    public void printMatrix(){
+        for (int i=0; i<vertices; i++){
+            for (int j=0; j<vertices; j++){
+                System.out.print(matrix[i][j]+" ");
+            }
+            System.out.println();
+        }
     }
 
     public void bfs(int start) {
@@ -184,3 +194,4 @@ class GraphArrayList {
         }
     }
 }
+//13:29
